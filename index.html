@@ -1,9 +1,20 @@
 <title>Financial Metrics for Historic Broadway Shows</title>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> circle {fill: lightblue; stroke: black;} </style>
+<body onload='init()'>
+<svg width=1000 height=600>
+</svg>
 <h1>Financial Metrics for Historic Broadway Shows</h1>
-<h2>Bob Manasco, manasco2@illinois.edu</h2>
-<h2>22 July 2020</h2>
+<p>Bob Manasco, manasco2@illinois.edu</p>
+<p>22 July 2020</p>
+<h2>Introduction</p>
 <p>The COVID-19 pandemic has caused an unprecedented hiatus for Broadway theatrical shows in New York City.  On March 12, 2020, all Broadway theatres closed their doors as mandated by Governor Andrew Cuomo and (as of July 22, 2020) have remained closed ever since.</p>
 <p>In this narrative visualization, we will examine the history of Broadway shows as far back as the 18th Century, we will look at attendance trends over the past 25 years, and we will delve into the financial metrics of this show business.</p>
+<script>
+async function init() {
+  data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_silver.csv');
+}    
+</script>
 <h2>References</h2>
 <p>Bressler, Y. (2018, September 21). Opening the Stage Door for Big Data in Broadway - Building Databases from unstructured text using... Retrieved July 22, 2020, from https://towardsdatascience.com/opening-the-stage-door-for-big-data-in-broadway-20ca3e35a274</p>
 <p>Hodge, M. 21st-Century Broadway Musicals and the ‘Best Musical’ Tony Award: Trends and Impact. Arts 2020, 9, 58.</p>
