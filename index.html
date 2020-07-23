@@ -1,7 +1,6 @@
 <title>Financial Metrics for Historic Broadway Shows</title>
 <script src='https://d3js.org/d3.v5.min.js'></script>
-<style> circle {fill: lightblue; stroke: black;} </style>
-<body onload='init()'>
+<body>
 <h1>Financial Metrics for Historic Broadway Shows</h1>
 <p>Bob Manasco, manasco2@illinois.edu</p>
 <p>22 July 2020</p>
@@ -10,10 +9,6 @@
 <p>In this narrative visualization, we will examine the history of Broadway shows as far back as 1901, we will look at attendance trends over the past 25 years, and we will delve into the financial metrics of this show business.</p>
 <div id="bway_hist"></div>
 <script>
-//  async function init() {
-//    data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_decades.csv');
-//  }
-  
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
     width = 460 - margin.left - margin.right,
@@ -29,11 +24,11 @@ var svg = d3.select("#bway_hist")
           "translate(" + margin.left + "," + margin.top + ")");
 
 // get the data
-d3.csv("https://bo8b.github.io/broadway_viz/broadway_year_hist.csv", function(data) {
+d3.csv("https://bo8b.github.io/broadway_viz/broadway_dates.csv", function(data) {
 
   // X axis: scale and draw:
   var x = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) { return +d.price })])
+      .domain([0, 300)
       .range([0, width]);
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -41,9 +36,9 @@ d3.csv("https://bo8b.github.io/broadway_viz/broadway_year_hist.csv", function(da
 
   // set the parameters for the histogram
   var histogram = d3.histogram()
-      .value(function(d) { return d.price; })   // I need to give the vector of value
+      .value(function(d) { return d.Year; })   // I need to give the vector of value
       .domain(x.domain())  // then the domain of the graphic
-      .thresholds(x.ticks(70)); // then the numbers of bins
+      .thresholds(x.ticks(117)); // then the numbers of bins
 
   // And apply this function to data to get the bins
   var bins = histogram(data);
@@ -68,7 +63,7 @@ d3.csv("https://bo8b.github.io/broadway_viz/broadway_year_hist.csv", function(da
 
 });
 </script>
-<p>BLAH BLAH BLAH</p>
+<p></p>
 <h2>References</h2>
 <p>Bressler, Y. (2018, September 21). Opening the Stage Door for Big Data in Broadway - Building Databases from unstructured text using... Retrieved July 22, 2020, from https://towardsdatascience.com/opening-the-stage-door-for-big-data-in-broadway-20ca3e35a274</p>
 <p>Hodge, M. 21st-Century Broadway Musicals and the ‘Best Musical’ Tony Award: Trends and Impact. Arts 2020, 9, 58.</p>
