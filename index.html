@@ -5,8 +5,9 @@
 <p>Bob Manasco, manasco2@illinois.edu</p>
 <p>22 July 2020</p>
 <h2>Introduction</h2>
-<p>The COVID-19 pandemic has caused an unprecedented hiatus for Broadway theatrical shows in New York City.  On March 12, 2020, all Broadway theatres closed their doors as mandated by Governor Andrew Cuomo and (as of this writing) have remained closed ever since.</p>
+<p>The COVID-19 pandemic has caused an unprecedented hiatus for Broadway theatrical shows in New York City.  On March 12, 2020, all Broadway theatres closed their doors as mandated by New York Governor Andrew Cuomo and (as of this writing) have remained closed ever since.</p>
 <p>In this narrative visualization, we will examine the history of Broadway shows as far back as 1901, we will look at attendance trends over the past 25 years, and we will delve into the financial metrics of this show business.</p>
+<H2>Number of Productions Opening, by Year</H2>
 <svg width=950 height=450>
 </svg>
 <script>
@@ -14,10 +15,10 @@ async function init() {
 
 data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_year_hist.csv');
 
-xdomain = [0,60];
-xrange = [25,925];
+xdomain = [0,118];
+xrange = [0,950];
 ydomain = [0,295];
-yrange = [25,425];
+yrange = [0,450];
 
 xs = d3.scaleLinear().domain(xdomain).range(xrange);
 ys = d3.scaleLinear().domain(ydomain).range(yrange);
@@ -29,13 +30,19 @@ d3.select('svg')
   .append('rect')
     .attr('x',function(d,i) {return xs(i);})
     .attr('y',function(d,i) {return ys(295 - d.Productions);})
-    .attr('width',10)
+    .attr('width',5)
     .attr('height',function(d,i) {return ys(d.Productions);})
-    .style('fill',"darkorange")
-    .style('stroke',"dodgerblue");
+    .style('fill',"dodgerblue")
+    .style('stroke',"darkorange");
 }
 </script>
 
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 <p></p>
 <h2>References</h2>
 <p>Bressler, Y. (2018, September 21). Opening the Stage Door for Big Data in Broadway - Building Databases from unstructured text using... Retrieved July 22, 2020, from https://towardsdatascience.com/opening-the-stage-door-for-big-data-in-broadway-20ca3e35a274</p>
