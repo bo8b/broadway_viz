@@ -1,74 +1,44 @@
 <title>Financial Metrics for Historic Broadway Shows</title>
-<script src='https://d3js.org/d3.v5.min.js'></script>
-<body>
+<script src="https://d3js.org/d3.v5.js"></script>
+<body onload='init()'>
 <h1>Financial Metrics for Historic Broadway Shows</h1>
 <p>Bob Manasco, manasco2@illinois.edu</p>
-<p>22 July 2020</p>
+<p>23 July 2020</p>
 <h2>Introduction</h2>
-<p>The COVID-19 pandemic has caused an unprecedented hiatus for Broadway theatrical shows in New York City.  On March 12, 2020, all Broadway theatres closed their doors as mandated by Governor Andrew Cuomo and (as of July 22, 2020) have remained closed ever since.</p>
+<p>The COVID-19 pandemic has caused an unprecedented hiatus for Broadway theatrical shows in New York City.  On March 12, 2020, all Broadway theatres closed their doors as mandated by Governor Andrew Cuomo and (as of this writing) have remained closed ever since.</p>
 <p>In this narrative visualization, we will examine the history of Broadway shows as far back as 1901, we will look at attendance trends over the past 25 years, and we will delve into the financial metrics of this show business.</p>
-<!-- Create a div where the graph will take place -->
-<!-- Create a div where the graph will take place -->
-<div id="bway_hist"></div>
-
-
+<svg width=1650 height=400>
+</svg>
 <script>
+async function init() {
 
-// set the dimensions and margins of the graph
-var margin = {top: 10, right: 30, bottom: 30, left: 40},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
 
-// append the svg object to the body of the page
-var svg = d3.select("#bway_hist")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_year_hist.csv');
+xdomain = [0,350];
+xrange = [50,1600];
+ydomain = [1901,2017];
+yrange = [50,350];
 
-// get the data
-d3.csv("https://bo8b.github.io/broadway_viz/broadway_dates.csv", function(data) {
-
-  // X axis: scale and draw:
-  var x = d3.scaleLinear()
-      .domain([0, 350])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.Year })
-      .range([0, width]);
-  svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-  // set the parameters for the histogram
-  var histogram = d3.histogram()
-      .value(function(d) { return d.Year; })   // I need to give the vector of value
-      .domain(x.domain())  // then the domain of the graphic
-      .thresholds(x.ticks(70)); // then the numbers of bins
-
-  // And apply this function to data to get the bins
-  var bins = histogram(data);
-
-  // Y axis: scale and draw:
-  var y = d3.scaleLinear()
-      .range([height, 0]);
-      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
-  svg.append("g")
-      .call(d3.axisLeft(y));
-
-  // append the bar rectangles to the svg element
-  svg.selectAll("rect")
-      .data(bins)
-      .enter()
-      .append("rect")
-        .attr("x", 1)
-        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
-        .attr("height", function(d) { return height - y(d.length); })
-        .style("fill", "#69b3a2")
-
-});
+xs = d3.scaleLinear().domain(xdomain).range(xrange);
+ys = d3.scaleLinear().domain(ydomain).range(yrange);
+col = 
+d3.select('svg')
+  .selectAll('rect')
+  .data(data)
+  .enter()
+  .append('rect')
+    .attr('x',function(d,i) {return xs(i);})
+    .attr('y',function(d,i) {return xs(d.Productions);})
+    .attr('width',3)
+    .attr('height',350)
+    .style('fill',function(d,i) {
+             if(i%2 > 0) { return "darkorange" }
+             else { return "dodgerblue" }
+           } );
+}
 </script>
-<p>2</p>
+
+<p></p>
 <h2>References</h2>
 <p>Bressler, Y. (2018, September 21). Opening the Stage Door for Big Data in Broadway - Building Databases from unstructured text using... Retrieved July 22, 2020, from https://towardsdatascience.com/opening-the-stage-door-for-big-data-in-broadway-20ca3e35a274</p>
 <p>Hodge, M. 21st-Century Broadway Musicals and the ‘Best Musical’ Tony Award: Trends and Impact. Arts 2020, 9, 58.</p>
