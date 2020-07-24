@@ -3,38 +3,36 @@
 <body onload='init()'>
 <h1>Financial Metrics for Historic Broadway Shows</h1>
 <p>Bob Manasco, manasco2@illinois.edu</p>
-<p>23 July 2020</p>
+<p>22 July 2020</p>
 <h2>Introduction</h2>
 <p>The COVID-19 pandemic has caused an unprecedented hiatus for Broadway theatrical shows in New York City.  On March 12, 2020, all Broadway theatres closed their doors as mandated by Governor Andrew Cuomo and (as of this writing) have remained closed ever since.</p>
 <p>In this narrative visualization, we will examine the history of Broadway shows as far back as 1901, we will look at attendance trends over the past 25 years, and we will delve into the financial metrics of this show business.</p>
-<svg width=1650 height=400>
+<svg width=950 height=450>
 </svg>
 <script>
 async function init() {
 
-
 data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_year_hist.csv');
-xdomain = [0,350];
-xrange = [50,1600];
-ydomain = [1901,2017];
-yrange = [50,350];
+
+xdomain = [0,60];
+xrange = [25,925];
+ydomain = [0,295];
+yrange = [25,425];
 
 xs = d3.scaleLinear().domain(xdomain).range(xrange);
 ys = d3.scaleLinear().domain(ydomain).range(yrange);
-col = 
+
 d3.select('svg')
   .selectAll('rect')
   .data(data)
   .enter()
   .append('rect')
     .attr('x',function(d,i) {return xs(i);})
-    .attr('y',function(d,i) {return xs(d.Productions);})
-    .attr('width',3)
-    .attr('height',350)
-    .style('fill',function(d,i) {
-             if(i%2 > 0) { return "darkorange" }
-             else { return "dodgerblue" }
-           } );
+    .attr('y',function(d,i) {return ys(295 - d.Productions);})
+    .attr('width',10)
+    .attr('height',function(d,i) {return ys(d.Productions);})
+    .style('fill',"darkorange")
+    .style('stroke',"dodgerblue");
 }
 </script>
 
