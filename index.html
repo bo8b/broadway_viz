@@ -42,7 +42,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
   var histogram = d3.histogram()
       .value(function(d) { return d.price; })   // I need to give the vector of value
       .domain(x.domain())  // then the domain of the graphic
-      .thresholds(x.ticks(117)); // then the numbers of bins
+      .thresholds(x.ticks(70)); // then the numbers of bins
 
   // And apply this function to data to get the bins
   var bins = histogram(data);
@@ -67,7 +67,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
 
 });
 </script>
-<p>1</p>
+<p>2</p>
 <h2>References</h2>
 <p>Bressler, Y. (2018, September 21). Opening the Stage Door for Big Data in Broadway - Building Databases from unstructured text using... Retrieved July 22, 2020, from https://towardsdatascience.com/opening-the-stage-door-for-big-data-in-broadway-20ca3e35a274</p>
 <p>Hodge, M. 21st-Century Broadway Musicals and the ‘Best Musical’ Tony Award: Trends and Impact. Arts 2020, 9, 58.</p>
