@@ -7,15 +7,19 @@
 <h2>Introduction</h2>
 <p>The COVID-19 pandemic has caused an unprecedented hiatus for Broadway theatrical shows in New York City.  On March 12, 2020, all Broadway theatres closed their doors as mandated by Governor Andrew Cuomo and (as of July 22, 2020) have remained closed ever since.</p>
 <p>In this narrative visualization, we will examine the history of Broadway shows as far back as 1901, we will look at attendance trends over the past 25 years, and we will delve into the financial metrics of this show business.</p>
-<div id="bway_hist"></div>
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+
+
 <script>
+
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
-var svg = d3.select("#bway_hist")
+var svg = d3.select("#my_dataviz")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -24,11 +28,11 @@ var svg = d3.select("#bway_hist")
           "translate(" + margin.left + "," + margin.top + ")");
 
 // get the data
-d3.csv("https://bo8b.github.io/broadway_viz/broadway_dates.csv", function(data) {
+d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", function(data) {
 
   // X axis: scale and draw:
   var x = d3.scaleLinear()
-      .domain([0, 300)
+      .domain([0, 1000])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
       .range([0, width]);
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -36,9 +40,9 @@ d3.csv("https://bo8b.github.io/broadway_viz/broadway_dates.csv", function(data) 
 
   // set the parameters for the histogram
   var histogram = d3.histogram()
-      .value(function(d) { return d.Year; })   // I need to give the vector of value
+      .value(function(d) { return d.price; })   // I need to give the vector of value
       .domain(x.domain())  // then the domain of the graphic
-      .thresholds(x.ticks(117)); // then the numbers of bins
+      .thresholds(x.ticks(70)); // then the numbers of bins
 
   // And apply this function to data to get the bins
   var bins = histogram(data);
@@ -63,7 +67,7 @@ d3.csv("https://bo8b.github.io/broadway_viz/broadway_dates.csv", function(data) 
 
 });
 </script>
-<p></p>
+<p>STRAIGHT COPY N PASTE</p>
 <h2>References</h2>
 <p>Bressler, Y. (2018, September 21). Opening the Stage Door for Big Data in Broadway - Building Databases from unstructured text using... Retrieved July 22, 2020, from https://towardsdatascience.com/opening-the-stage-door-for-big-data-in-broadway-20ca3e35a274</p>
 <p>Hodge, M. 21st-Century Broadway Musicals and the ‘Best Musical’ Tony Award: Trends and Impact. Arts 2020, 9, 58.</p>
