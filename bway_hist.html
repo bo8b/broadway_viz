@@ -7,28 +7,54 @@
 <script>
 async function init() {
 
-data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_year_hist.csv');
+data = await d3.csv("https://bo8b.github.io/broadway_viz/broadway_year_hist.csv");
 
-xdomain = [0,118];
-xrange = [0,950];
-ydomain = [0,295];
-yrange = [0,450];
+xs = d3.scaleLinear().domain([1900,2020]).range([0,850]);
+ys = d3.scaleLinear().domain([0,295]).range([350,0]);
+width = 5
 
-xs = d3.scaleLinear().domain(xdomain).range(xrange);
-ys = d3.scaleLinear().domain(ydomain).range(yrange);
-
-d3.select('svg')
-  .selectAll('rect')
+d3.select("svg")
+  .selectAll("g")
+  .data([1])
+  .enter()
+  .append("g")
+    .attr("transform","translate(50,50)")
+  .selectAll("rect")
   .data(data)
   .enter()
-  .append('rect')
-    .attr('x',function(d,i) {return xs(i);})
-    .attr('y',function(d,i) {return ys(295 - d.Productions);})
-    .attr('width',5)
-    .attr('height',function(d,i) {return ys(d.Productions);})
-    .style('fill',"dodgerblue")
-    .style('stroke',"darkorange");
+  .append("rect")
+    .attr("x",function(d,i) {return xs(d.Year) - (width / 2);})
+    .attr("y",function(d,i) {return ys(d.Productions);})
+    .attr("width",width)
+    .attr("height",function(d,i) {return ys(295 - d.Productions);})
+    .style("fill","darkorange")
+
+d3.select("svg").append("g")
+    .attr("transform","translate(50,50)")
+    .call(d3.axisLeft(ys)
+//      .tickArguments([10,".0"])
+);
+d3.select("svg").append("g")
+    .attr("transform","translate(50,400)")
+    .call(d3.axisBottom(xs)
+      .tickArguments([20,"d"])
+);
+
+d3.select("svg").append("text")             
+      .attr("transform","translate(475,435)")
+      .style("text-anchor", "middle")
+      .text("Year");
+
+d3.select("svg").append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0)
+      .attr("x", -225)
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Number of Productions Opening");  
+
 }
+
 </script>
 
 <p>We can see that in the 1900s through the 1920s, there were on average about 190 Broadway production that opened per year.  Many of these shows were short-lived affairs, with an average run of only 79.5 days.  Around the time of the Great Depression, the producing philosophy began to change.  Fewer new shows opened per year, but the ones that did tended to have longer runs and be more financially successful.  Since 1940, there have only averaged around 57 new Broadway productions per year, but the average show run has increased to around 150 days.</p>

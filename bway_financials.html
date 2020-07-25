@@ -1,13 +1,13 @@
 <title>Broadway Financials</title>
 <script src="https://d3js.org/d3.v5.js"></script>
-<body onload='init()'>
+<body onload="init()">
 <H2>Broadway Financials</H2>
 <svg width=950 height=450>
 </svg>
 <script>
 async function init() {
 
-data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_financials.csv');
+data = await d3.csv("https://bo8b.github.io/broadway_viz/broadway_financials.csv");
 
 var cx_scale = d3.scaleLog().domain([3870,3100000]).range([0,850]);
 var cy_scale = d3.scaleLinear().domain([.1,1.05]).range([350,0]);
@@ -25,7 +25,7 @@ d3.select("svg")
     .attr("cx", function (d) { return cx_scale(+d.Avg_Gross); })
     .attr("cy", function (d) { return cy_scale(+d.Avg_Cap); })
     .attr("r", 3 )
-    .style("fill", "dodgerblue")
+    .style("fill", "darkorange")
 ;
 
 d3.select("svg").append("g")
@@ -53,6 +53,14 @@ d3.select("svg").append("text")
       .text("Average Percent Tickets Sold per Performance");  
 
 }
+
+d3.select("svg").append("line")
+    .style("stroke", "dodgerblue")
+    .style("stroke-width", 4)
+    .attr("x1", 59)
+    .attr("y1", 400)
+    .attr("x2", 889)
+    .attr("y2", 50);
 </script>
 
 <p>We can see that in the 1900s through the 1920s, there were on average about 190 Broadway production that opened per year.  Many of these shows were short-lived affairs, with an average run of only 79.5 days.  Around the time of the Great Depression, the producing philosophy began to change.  Fewer new shows opened per year, but the ones that did tended to have longer runs and be more financially successful.  Since 1940, there have only averaged around 57 new Broadway productions per year, but the average show run has increased to around 150 days.</p>
