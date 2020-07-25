@@ -1,0 +1,60 @@
+<title>Broadway Financials</title>
+<script src="https://d3js.org/d3.v5.js"></script>
+<body onload='init()'>
+<H2>Broadway Financials</H2>
+<svg width=950 height=450>
+</svg>
+<script>
+async function init() {
+
+data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_financials.csv');
+
+var cx_scale = d3.scaleLog().domain([3870,3100000]).range([0,850]);
+var cy_scale = d3.scaleLinear().domain([.1,1.05]).range([350,0]);
+
+d3.select("svg")
+  .selectAll("g")
+  .data([1])
+  .enter()
+  .append("g")
+    .attr("transform","translate(50,50)")
+  .selectAll("circle")
+  .data(data)
+  .enter()
+  .append("circle")
+    .attr("cx", function (d) { return cx_scale(+d.Avg_Gross); })
+    .attr("cy", function (d) { return cy_scale(+d.Avg_Cap); })
+    .attr("r", 3 )
+    .style("fill", "dodgerblue")
+;
+
+d3.select("svg").append("g")
+    .attr("transform","translate(50,50)")
+    .call(d3.axisLeft(cy_scale)
+      .tickArguments([10,".0%"])
+);
+d3.select("svg").append("g")
+    .attr("transform","translate(50,400)")
+    .call(d3.axisBottom(cx_scale)
+      .tickArguments([12,"$.0s"])
+);
+
+d3.select("svg").append("text")             
+      .attr("transform","translate(475,435)")
+      .style("text-anchor", "middle")
+      .text("Average Gross Revenue per Performance");
+
+d3.select("svg").append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0)
+      .attr("x", -225)
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Average Percent Tickets Sold per Performance");  
+
+}
+</script>
+
+<p>We can see that in the 1900s through the 1920s, there were on average about 190 Broadway production that opened per year.  Many of these shows were short-lived affairs, with an average run of only 79.5 days.  Around the time of the Great Depression, the producing philosophy began to change.  Fewer new shows opened per year, but the ones that did tended to have longer runs and be more financially successful.  Since 1940, there have only averaged around 57 new Broadway productions per year, but the average show run has increased to around 150 days.</p>
+<p>&nbsp;</p>
+<p><a href="bway_attendance.html">← Previous</a></p>

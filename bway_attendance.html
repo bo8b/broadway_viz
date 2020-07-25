@@ -1,0 +1,37 @@
+<title>Number of Broadway Openings by Year</title>
+<script src="https://d3js.org/d3.v5.js"></script>
+<body onload='init()'>
+<H2>Number of Broadway Openings, by Year</H2>
+<p>When we get into attendance records and financial records, our data becomes more limited, as this data set only reports these types of numbers for shows in the past 25 years or so.  So, for the next two slides, we will limit ourselves to shows from 1998 - 2018.</p>
+<svg width=950 height=450>
+</svg>
+<script>
+async function init() {
+
+data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_attendance.csv');
+
+xdomain = [0,21];
+xrange = [0,950];
+ydomain = [0,1];
+yrange = [0,450];
+
+xs = d3.scaleLinear().domain(xdomain).range(xrange);
+ys = d3.scaleLinear().domain(ydomain).range(yrange);
+
+d3.select('svg')
+  .selectAll('rect')
+  .data(data)
+  .enter()
+  .append('rect')
+    .attr('x',function(d,i) {return xs(i);})
+    .attr('y',function(d,i) {return ys(1 - d.Avg_Cap);})
+    .attr('width',20)
+    .attr('height',function(d,i) {return ys(d.Avg_Cap);})
+    .style('fill',"dodgerblue")
+    .style('stroke',"darkorange");
+}
+</script>
+
+<p>If we take the average number of tickets sold for shows in a year, and divide it by the average total number of seats available for shows in a year, that gives us an average attendance percentage.  We can see that this percentage is rising over time, which also indicates that while producers are mounting a fewer number of shows, the ones that are produced are indeed more successful, or at least better-attended.</p>
+<p>&nbsp;</p>
+<p><a href="bway_hist.html">← Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="bway_financials.html">Next →</a></p>

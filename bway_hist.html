@@ -1,0 +1,36 @@
+<title>Number of Broadway Openings by Year</title>
+<script src="https://d3js.org/d3.v5.js"></script>
+<body onload='init()'>
+<H2>Number of Broadway Openings, by Year</H2>
+<svg width=950 height=450>
+</svg>
+<script>
+async function init() {
+
+data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_year_hist.csv');
+
+xdomain = [0,118];
+xrange = [0,950];
+ydomain = [0,295];
+yrange = [0,450];
+
+xs = d3.scaleLinear().domain(xdomain).range(xrange);
+ys = d3.scaleLinear().domain(ydomain).range(yrange);
+
+d3.select('svg')
+  .selectAll('rect')
+  .data(data)
+  .enter()
+  .append('rect')
+    .attr('x',function(d,i) {return xs(i);})
+    .attr('y',function(d,i) {return ys(295 - d.Productions);})
+    .attr('width',5)
+    .attr('height',function(d,i) {return ys(d.Productions);})
+    .style('fill',"dodgerblue")
+    .style('stroke',"darkorange");
+}
+</script>
+
+<p>We can see that in the 1900s through the 1920s, there were on average about 190 Broadway production that opened per year.  Many of these shows were short-lived affairs, with an average run of only 79.5 days.  Around the time of the Great Depression, the producing philosophy began to change.  Fewer new shows opened per year, but the ones that did tended to have longer runs and be more financially successful.  Since 1940, there have only averaged around 57 new Broadway productions per year, but the average show run has increased to around 150 days.</p>
+<p>&nbsp;</p>
+<p><a href="index.html">← Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="bway_attendance.html">Next →</a></p>
