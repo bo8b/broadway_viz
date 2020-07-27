@@ -2,7 +2,7 @@
 <script src="https://d3js.org/d3.v5.js"></script>
 <body onload='init()'>
 <H2>Number of Broadway Openings, by Year</H2>
-<svg width=950 height=450>
+<svg width=950 height=450 id="triangle">
 </svg>
 <script>
 async function init() {
@@ -27,13 +27,42 @@ d3.select("svg")
     .attr("y",function(d,i) {return ys(d.Productions);})
     .attr("width",width)
     .attr("height",function(d,i) {return ys(295 - d.Productions);})
-    .style("fill","darkorange")
+    .style("fill","darkorange");
+
+d3.select("svg").append("svg:defs").append("svg:marker")
+    .attr("id", "triangle")
+    .attr("refX", 15)
+    .attr("refY", -1.5)
+    .attr("markerWidth", 6)
+    .attr("markerHeight", 6)
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M 0 -5 10 10")
+    .style("stroke", "black");
+
+d3.select("svg").append("line")
+  .attr("x1", 55)
+  .attr("y1", 75)
+  .attr("x2", 235)
+  .attr("y2", 75)
+  .attr("stroke-width", 1)
+  .attr("stroke", "black")
+  .attr("marker-end", "url(#triangle)");
+
+d3.select("svg").append("line")
+  .attr("x1", 340)
+  .attr("y1", 250)
+  .attr("x2", 890)
+  .attr("y2", 250)
+  .attr("stroke-width", 1)
+  .attr("stroke", "black")
+  .attr("marker-end", "url(#triangle)");
 
 d3.select("svg").append("g")
     .attr("transform","translate(50,50)")
     .call(d3.axisLeft(ys)
-//      .tickArguments([10,".0"])
 );
+
 d3.select("svg").append("g")
     .attr("transform","translate(50,400)")
     .call(d3.axisBottom(xs)
@@ -54,6 +83,27 @@ d3.select("svg").append("text")
       .text("Number of Productions Opening");  
 
 }
+
+d3.select("svg").append("text")             
+      .attr("transform","translate(150,45)")
+      .style("text-anchor", "middle")
+      .text("Average Openings:");
+
+d3.select("svg").append("text")             
+      .attr("transform","translate(150,65)")
+      .style("text-anchor", "middle")
+      .text("190 per year");
+
+d3.select("svg").append("text")             
+      .attr("transform","translate(620,270)")
+      .style("text-anchor", "middle")
+      .text("Average Openings:");
+
+d3.select("svg").append("text")             
+      .attr("transform","translate(620,290)")
+      .style("text-anchor", "middle")
+      .text("57 per year");
+
 
 </script>
 
