@@ -29,6 +29,18 @@ data = await d3.csv("https://bo8b.github.io/broadway_viz/broadway_financials.csv
 var cx_scale = d3.scaleLinear().domain([.1,1.05]).range([0,850]);
 var cy_scale = d3.scaleLog().domain([3870,3100000]).range([350,0]);
 
+function fill_col(show_type) {
+  if (show_type == "Musical") {
+    return "dodgerblue"
+  }
+  else if (show_type == "Play") {
+    return "darkorange"
+  }
+  else {
+    return "darkgray"
+  }
+}
+
 div = d3.select("body").append("div")	
     .attr("class", "tooltip")				
     .style("opacity", 0); 
@@ -46,18 +58,20 @@ d3.select("svg")
     .attr("cx", function (d) { return cx_scale(+d.Avg_Cap); })
     .attr("cy", function (d) { return cy_scale(+d.Avg_Gross); })
     .attr("r", 3 )
-    .style("fill", "darkorange")
-    .on("mouseover", function(d) {		
-          div.style("opacity", .85);		
-          div.html("<b>" + d.Show + "</b>"
+    .style("fill", function (d) { return fill_col(d.Show_Type); })
+    .on("mouseover", function(d) {
+          div.html("<b>" + d.Show + "</b> (" + d.Year + ")"
+          + "</br>" + "Show Type: " + d.Show_Type
           + "</br>" + "Average Capacity: " + (d.Avg_Cap * 100).toFixed(2) + "%"
           + "</br>" + "Average Gross: $" + d.Avg_Gross)	
           .style("left", (d3.event.pageX) + "px")		
-          .style("top", (d3.event.pageY - 28) + "px");	
+          .style("top", (d3.event.pageY - 28) + "px")	
+          .style("opacity", .85);		
         })					
     .on("mouseout", function(d) {		
-      div.style("opacity", 0);	
-});
+      div.style("opacity", 0);})
+
+;
 
 d3.select("svg").append("g")
     .attr("transform","translate(70,50)")
@@ -108,4 +122,4 @@ d3.select("svg").append("text")
 
 </script>
 
-<p>As expected, we can see that in general, the higher percentage of tickets sold a show has, the higher weekly gross revenue it has.</p>
+<p>As expected, we can see that in general, the higher percentage of tickets sold a show has, the higher weekly gross revenue it has.  It is also fairly clear that musicals (blue dots) have a higher weekly gross revenue than plays (orange dots) in general, although attendance rates appear to be fairly even.  Concerts, special events, and other performance types (grey dots) appear equally distributed throughout the graph.</p>
