@@ -1,5 +1,19 @@
 <title>Weekly Percent of Tickets Sold vs. Weekly Gross Revenue</title>
 <script src="https://d3js.org/d3.v5.js"></script>
+<style>
+div.tooltip {	
+  position: absolute;			
+  text-align: center;			
+  width: 200px;					
+  height: 150px;					
+  padding: 2px;				
+  font: 12px;		
+  background: white;	
+  border: 2px;		
+  border-radius: 8px;			
+  pointer-events: none;			
+}
+</style>
 <body onload="init()">
 <H2>Weekly Percent of Tickets Sold vs. Weekly Gross Revenue</H2>
 <p><a href="bway_attendance.html">← Previous</a></p>
@@ -15,6 +29,10 @@ data = await d3.csv("https://bo8b.github.io/broadway_viz/broadway_financials.csv
 var cx_scale = d3.scaleLinear().domain([.1,1.05]).range([0,850]);
 var cy_scale = d3.scaleLog().domain([3870,3100000]).range([350,0]);
 
+div = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0); 
+
 d3.select("svg")
   .selectAll("g")
   .data([1])
@@ -29,7 +47,17 @@ d3.select("svg")
     .attr("cy", function (d) { return cy_scale(+d.Avg_Gross); })
     .attr("r", 3 )
     .style("fill", "darkorange")
-;
+    .on("mouseover", function(d) {		
+          div.style("opacity", .85);		
+          div.html("<b>" + d.Show + "</b>"
+          + "</br>" + "Average Capacity: " + (d.Avg_Cap * 100).toFixed(2) + "%"
+          + "</br>" + "Average Gross: $" + d.Avg_Gross)	
+          .style("left", (d3.event.pageX) + "px")		
+          .style("top", (d3.event.pageY - 28) + "px");	
+        })					
+    .on("mouseout", function(d) {		
+      div.style("opacity", 0);	
+});
 
 d3.select("svg").append("g")
     .attr("transform","translate(70,50)")
@@ -76,8 +104,7 @@ d3.select("svg").append("text")
       .attr("transform","translate(190,180)")
       .style("text-anchor", "middle")
       .style("fill", "dodgerblue")
-      .text("Simple Linear Regression Model");
-
+      .text("Trend Line showing correlation");
 
 </script>
 
