@@ -2,6 +2,8 @@
 <script src="https://d3js.org/d3.v5.js"></script>
 <body onload='init()'>
 <H2>Percent of Tickets Sold, by Year</H2>
+<p><a href="bway_hist.html">← Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="bway_financials.html">Next →</a></p>
+<p>&nbsp;</p>
 <p>When we get into attendance records and financial records, our data becomes more limited, as this data set only reports these types of numbers for shows in the past 25 years or so.  So, for the next two slides, we will limit ourselves to shows from 1998 - 2018.</p>
 <svg width=950 height=450>
 </svg>
@@ -10,9 +12,9 @@ async function init() {
 
 data = await d3.csv('https://bo8b.github.io/broadway_viz/broadway_attendance.csv');
 
-xs = d3.scaleLinear().domain([1997,2020]).range([0,850]);
-ys = d3.scaleLinear().domain([0,1]).range([350,0]);
-width = 20
+var xs = d3.scaleLinear().domain([1997,2020]).range([0,850]);
+var ys = d3.scaleLinear().domain([0,1]).range([350,0]);
+var width = 20
 
 d3.select('svg')
   .selectAll("g")
@@ -32,6 +34,44 @@ d3.select('svg')
     .attr('width',width)
     .attr('height',function(d,i) {return ys(1 - d.Avg_Cap);})
     .style('fill',"darkorange")
+
+d3.select("svg").append("line")
+  .attr("x1", 87)
+  .attr("y1", 143)
+  .attr("x2", 826)
+  .attr("y2", 55)
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
+
+d3.select("svg").append("line")
+  .attr("x1", 87)
+  .attr("y1", 143)
+  .attr("x2", 87)
+  .attr("y2", 163)
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
+
+d3.select("svg").append("line")
+  .attr("x1", 826)
+  .attr("y1", 55)
+  .attr("x2", 826)
+  .attr("y2", 75)
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
+
+d3.select("svg").append("line")
+  .attr("x1", 198)
+  .attr("y1", 88)
+  .attr("x2", 245)
+  .attr("y2", 125)
+  .attr("stroke-width", 1)
+  .attr("stroke", "dodgerblue");
+
+d3.select("svg").append("text")             
+      .attr("transform","translate(200,75)")
+      .style("text-anchor", "middle")
+      .style("fill", "dodgerblue")
+      .text("Almost 25% increase in attendance");
 
 d3.select("svg").append("g")
     .attr("transform","translate(50,50)")
@@ -58,8 +98,7 @@ d3.select("svg").append("text")
       .text("Percent of Available Tickets Sold");  
 
 }
+
 </script>
 
 <p>If we take the average number of tickets sold for shows in a year, and divide it by the average total number of seats available for shows in a year, that gives us an average attendance percentage.  We can see that this percentage is rising over time, which also indicates that while producers are mounting a fewer number of shows, the ones that are produced are indeed more successful, or at least better-attended.</p>
-<p>&nbsp;</p>
-<p><a href="bway_hist.html">← Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="bway_financials.html">Next →</a></p>

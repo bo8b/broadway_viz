@@ -2,6 +2,9 @@
 <script src="https://d3js.org/d3.v5.js"></script>
 <body onload="init()">
 <H2>Weekly Percent of Tickets Sold vs. Weekly Gross Revenue</H2>
+<p><a href="bway_attendance.html">← Previous</a></p>
+<p>&nbsp;</p>
+<p>We can also view the correlation between percentage of tickets sold and gross revenue.  Note that it <u>is</u> possible to have over 100% of tickets sold, as when a performance completely sells out, theatres are allowed to sell "Standing Room Only" tickets where patrons pay to stand in the back of the audience to watch.</p>
 <svg width=950 height=450>
 </svg>
 <script>
@@ -9,40 +12,40 @@ async function init() {
 
 data = await d3.csv("https://bo8b.github.io/broadway_viz/broadway_financials.csv");
 
-var cx_scale = d3.scaleLog().domain([3870,3100000]).range([0,850]);
-var cy_scale = d3.scaleLinear().domain([.1,1.05]).range([350,0]);
+var cx_scale = d3.scaleLinear().domain([.1,1.05]).range([0,850]);
+var cy_scale = d3.scaleLog().domain([3870,3100000]).range([350,0]);
 
 d3.select("svg")
   .selectAll("g")
   .data([1])
   .enter()
   .append("g")
-    .attr("transform","translate(50,50)")
+    .attr("transform","translate(70,50)")
   .selectAll("circle")
   .data(data)
   .enter()
   .append("circle")
-    .attr("cx", function (d) { return cx_scale(+d.Avg_Gross); })
-    .attr("cy", function (d) { return cy_scale(+d.Avg_Cap); })
+    .attr("cx", function (d) { return cx_scale(+d.Avg_Cap); })
+    .attr("cy", function (d) { return cy_scale(+d.Avg_Gross); })
     .attr("r", 3 )
     .style("fill", "darkorange")
 ;
 
 d3.select("svg").append("g")
-    .attr("transform","translate(50,50)")
+    .attr("transform","translate(70,50)")
     .call(d3.axisLeft(cy_scale)
-      .tickArguments([10,".0%"])
+      .tickArguments([12,"$.0s"])
 );
 d3.select("svg").append("g")
-    .attr("transform","translate(50,400)")
+    .attr("transform","translate(70,400)")
     .call(d3.axisBottom(cx_scale)
-      .tickArguments([12,"$.0s"])
+      .tickArguments([10,".0%"])
 );
 
 d3.select("svg").append("text")             
-      .attr("transform","translate(475,435)")
+      .attr("transform","translate(495,435)")
       .style("text-anchor", "middle")
-      .text("Average Gross Revenue per Week");
+      .text("Average Percent Tickets Sold per Week");
 
 d3.select("svg").append("text")
       .attr("transform", "rotate(-90)")
@@ -50,19 +53,32 @@ d3.select("svg").append("text")
       .attr("x", -225)
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text("Average Percent Tickets Sold per Week");  
+      .text("Average Gross Revenue per Week");  
 
 }
 
 d3.select("svg").append("line")
     .style("stroke", "dodgerblue")
-    .style("stroke-width", 4)
-    .attr("x1", 59)
-    .attr("y1", 400)
-    .attr("x2", 889)
-    .attr("y2", 50);
+    .style("stroke-width", 2)
+    .attr("x1", 70)
+    .attr("y1", 283)
+    .attr("x2", 909)
+    .attr("y2", 118);
+d3.select("svg").append("line")
+    .style("stroke", "dodgerblue")
+    .style("stroke-width", 1)
+    .attr("x1", 208)
+    .attr("y1", 185)
+    .attr("x2", 270)
+    .attr("y2", 244);
+
+d3.select("svg").append("text")             
+      .attr("transform","translate(190,180)")
+      .style("text-anchor", "middle")
+      .style("fill", "dodgerblue")
+      .text("Simple Linear Regression Model");
+
+
 </script>
 
 <p>As expected, we can see that in general, the higher percentage of tickets sold a show has, the higher weekly gross revenue it has.</p>
-<p>&nbsp;</p>
-<p><a href="bway_attendance.html">← Previous</a></p>

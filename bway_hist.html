@@ -2,6 +2,8 @@
 <script src="https://d3js.org/d3.v5.js"></script>
 <body onload='init()'>
 <H2>Number of Broadway Openings, by Year</H2>
+<p><a href="index.html">← Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="bway_attendance.html">Next →</a></p>
+<p>&nbsp;</p>
 <svg width=950 height=450 id="triangle">
 </svg>
 <script>
@@ -9,9 +11,9 @@ async function init() {
 
 data = await d3.csv("https://bo8b.github.io/broadway_viz/broadway_year_hist.csv");
 
-xs = d3.scaleLinear().domain([1900,2020]).range([0,850]);
-ys = d3.scaleLinear().domain([0,295]).range([350,0]);
-width = 5
+var xs = d3.scaleLinear().domain([1900,2020]).range([0,850]);
+var ys = d3.scaleLinear().domain([0,295]).range([350,0]);
+var width = 5
 
 d3.select("svg")
   .selectAll("g")
@@ -29,34 +31,49 @@ d3.select("svg")
     .attr("height",function(d,i) {return ys(295 - d.Productions);})
     .style("fill","darkorange");
 
-d3.select("svg").append("svg:defs").append("svg:marker")
-    .attr("id", "triangle")
-    .attr("refX", 15)
-    .attr("refY", -1.5)
-    .attr("markerWidth", 6)
-    .attr("markerHeight", 6)
-    .attr("orient", "auto")
-    .append("path")
-    .attr("d", "M 0 -5 10 10")
-    .style("stroke", "black");
-
 d3.select("svg").append("line")
   .attr("x1", 55)
-  .attr("y1", 75)
-  .attr("x2", 235)
-  .attr("y2", 75)
-  .attr("stroke-width", 1)
-  .attr("stroke", "black")
-  .attr("marker-end", "url(#triangle)");
+  .attr("y1", 40)
+  .attr("x2", 247)
+  .attr("y2", 40)
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
+d3.select("svg").append("line")
+  .attr("x1", 55)
+  .attr("y1", 40)
+  .attr("x2", 55)
+  .attr("y2", 60)
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
+d3.select("svg").append("line")
+  .attr("x1", 247)
+  .attr("y1", 40)
+  .attr("x2", 247)
+  .attr("y2", 60)
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
 
 d3.select("svg").append("line")
-  .attr("x1", 340)
+  .attr("x1", 332)
+  .attr("y1", 250)
+  .attr("x2", 332)
+  .attr("y2", 270)
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
+d3.select("svg").append("line")
+  .attr("x1", 890)
+  .attr("y1", 250)
+  .attr("x2", 890)
+  .attr("y2", 270)
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
+d3.select("svg").append("line")
+  .attr("x1", 332)
   .attr("y1", 250)
   .attr("x2", 890)
   .attr("y2", 250)
-  .attr("stroke-width", 1)
-  .attr("stroke", "black")
-  .attr("marker-end", "url(#triangle)");
+  .attr("stroke-width", 2)
+  .attr("stroke", "dodgerblue");
 
 d3.select("svg").append("g")
     .attr("transform","translate(50,50)")
@@ -85,28 +102,29 @@ d3.select("svg").append("text")
 }
 
 d3.select("svg").append("text")             
-      .attr("transform","translate(150,45)")
+      .attr("transform","translate(155,60)")
       .style("text-anchor", "middle")
+      .style("fill", "dodgerblue")
       .text("Average Openings:");
 
 d3.select("svg").append("text")             
-      .attr("transform","translate(150,65)")
+      .attr("transform","translate(155,80)")
       .style("text-anchor", "middle")
+      .style("fill", "dodgerblue")
       .text("190 per year");
 
 d3.select("svg").append("text")             
-      .attr("transform","translate(620,270)")
+      .attr("transform","translate(620,273)")
       .style("text-anchor", "middle")
+      .style("fill", "dodgerblue")
       .text("Average Openings:");
 
 d3.select("svg").append("text")             
-      .attr("transform","translate(620,290)")
+      .attr("transform","translate(620,293)")
       .style("text-anchor", "middle")
+      .style("fill", "dodgerblue")
       .text("57 per year");
-
 
 </script>
 
 <p>We can see that in the 1900s through the 1920s, there were on average about 190 Broadway production that opened per year.  Many of these shows were short-lived affairs, with an average run of only 79.5 days.  Around the time of the Great Depression, the producing philosophy began to change.  Fewer new shows opened per year, but the ones that did tended to have longer runs and be more financially successful.  Since 1940, there have only averaged around 57 new Broadway productions per year, but the average show run has increased to around 150 days.</p>
-<p>&nbsp;</p>
-<p><a href="index.html">← Previous</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="bway_attendance.html">Next →</a></p>
