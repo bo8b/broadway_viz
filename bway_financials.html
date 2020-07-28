@@ -5,7 +5,7 @@ div.tooltip {
   position: absolute;			
   text-align: center;			
   width: 200px;					
-  height: 150px;					
+  height: 110px;					
   padding: 2px;				
   font: 12px;		
   background: white;	
@@ -16,7 +16,9 @@ div.tooltip {
 </style>
 <body onload="init()">
 <H2>Weekly Percent of Tickets Sold vs. Weekly Gross Revenue</H2>
-<p><a href="bway_attendance.html">← Previous</a></p>
+<p>
+  <input type="button" onclick="location.href='bway_attendance.html';" value="Previous" />
+</p>
 <p>&nbsp;</p>
 <p>We can also view the correlation between percentage of tickets sold and gross revenue.  Note that it <u>is</u> possible to have over 100% of tickets sold, as when a performance completely sells out, theatres are allowed to sell "Standing Room Only" tickets where patrons pay to stand in the back of the audience to watch.</p>
 <svg width=950 height=450>
@@ -122,4 +124,4 @@ d3.select("svg").append("text")
 
 </script>
 
-<p>As expected, we can see that in general, the higher percentage of tickets sold a show has, the higher weekly gross revenue it has.  It is also fairly clear that musicals (blue dots) have a higher weekly gross revenue than plays (orange dots) in general, although attendance rates appear to be fairly even.  Concerts, special events, and other performance types (grey dots) appear equally distributed throughout the graph.</p>
+<p>As expected, we can see that in general, the higher percentage of tickets sold a show has, the higher weekly gross revenue it has.  It is also fairly clear that musicals (blue dots) have a higher weekly gross revenue than plays (orange dots) in general, although attendance percentages appear to be fairly even.  One reason for this may be because many musicals are produced in the Broadway theatres containing the highest seating capacity.  Concerts, special events, and other performance types (grey dots) appear equally distributed throughout the graph.</p>
