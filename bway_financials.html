@@ -1,17 +1,14 @@
 <title>Weekly Percent of Tickets Sold vs. Weekly Gross Revenue</title>
 <script src="https://d3js.org/d3.v5.js"></script>
 <style>
-div.tooltip {	
-  position: absolute;			
-  text-align: center;			
-  width: 200px;					
-  height: 110px;					
-  padding: 2px;				
-  font: 12px;		
-  background: white;	
-  border: 2px;		
-  border-radius: 8px;			
-  pointer-events: none;			
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  height: 110px;
+  background: white;
+  border: 2px;
+  pointer-events: none;
 }
 </style>
 <body onload="init()">
@@ -57,6 +54,7 @@ d3.select("svg")
   .data(data)
   .enter()
   .append("circle")
+    .attr("class", function(d) { return "dots " + d.Show_Type})
     .attr("cx", function (d) { return cx_scale(+d.Avg_Cap); })
     .attr("cy", function (d) { return cy_scale(+d.Avg_Gross); })
     .attr("r", 3 )
@@ -101,26 +99,180 @@ d3.select("svg").append("text")
 
 }
 
+d3.select("svg").append("text")
+    .attr("class", function(d) { return "slr " + "All"})
+    .attr("transform","translate(190,180)")
+    .style("text-anchor", "middle")
+    .style("fill", "black")
+    .text("Trend Line for all shows");
 d3.select("svg").append("line")
-    .style("stroke", "dodgerblue")
+    .attr("class", function(d) { return "slr " + "All"})
+    .style("stroke", "black")
     .style("stroke-width", 2)
     .attr("x1", 70)
     .attr("y1", 283)
     .attr("x2", 909)
     .attr("y2", 118);
 d3.select("svg").append("line")
-    .style("stroke", "dodgerblue")
+    .attr("class", function(d) { return "slr " + "All"})
+    .style("stroke", "black")
     .style("stroke-width", 1)
     .attr("x1", 208)
     .attr("y1", 185)
     .attr("x2", 270)
     .attr("y2", 244);
 
-d3.select("svg").append("text")             
-      .attr("transform","translate(190,180)")
-      .style("text-anchor", "middle")
-      .style("fill", "dodgerblue")
-      .text("Trend Line showing correlation");
+d3.select("svg").append("text")
+    .attr("class", function(d) { return "slr " + "Musical"})
+    .attr("transform","translate(190,180)")
+    .style("text-anchor", "middle")
+    .style("fill", "dodgerblue")
+    .style("opacity", 0)
+    .text("Trend Line for musicals");
+d3.select("svg").append("line")
+    .attr("class", function(d) { return "slr " + "Musical"})
+    .style("stroke", "dodgerblue")
+    .style("stroke-width", 2)
+    .style("opacity", 0)
+    .attr("x1", 70)
+    .attr("y1", 259)
+    .attr("x2", 909)
+    .attr("y2", 106);
+d3.select("svg").append("line")
+    .attr("class", function(d) { return "slr " + "Musical"})
+    .style("stroke", "dodgerblue")
+    .style("stroke-width", 1)
+    .style("opacity", 0)
+    .attr("x1", 208)
+    .attr("y1", 185)
+    .attr("x2", 252)
+    .attr("y2", 226);
+
+d3.select("svg").append("text")
+    .attr("class", function(d) { return "slr " + "Play"})
+    .attr("transform","translate(190,180)")
+    .style("text-anchor", "middle")
+    .style("fill", "darkorange")
+    .style("opacity", 0)
+    .text("Trend Line for plays");
+d3.select("svg").append("line")
+    .attr("class", function(d) { return "slr " + "Play"})
+    .style("stroke", "darkorange")
+    .style("stroke-width", 2)
+    .style("opacity", 0)
+    .attr("x1", 70)
+    .attr("y1", 269)
+    .attr("x2", 909)
+    .attr("y2", 139);
+d3.select("svg").append("line")
+    .attr("class", function(d) { return "slr " + "Play"})
+    .style("stroke", "darkorange")
+    .style("stroke-width", 1)
+    .style("opacity", 0)
+    .attr("x1", 208)
+    .attr("y1", 185)
+    .attr("x2", 264)
+    .attr("y2", 238);
+
+d3.select("svg").append("text")
+    .attr("class", function(d) { return "slr " + "Other"})
+    .attr("transform","translate(190,180)")
+    .style("text-anchor", "middle")
+    .style("fill", "darkgray")
+    .style("opacity", 0)
+    .text("Trend Line for other productions");
+d3.select("svg").append("line")
+    .attr("class", function(d) { return "slr " + "Other"})
+    .style("stroke", "darkgray")
+    .style("stroke-width", 2)
+    .style("opacity", 0)
+    .attr("x1", 70)
+    .attr("y1", 292)
+    .attr("x2", 909)
+    .attr("y2", 114);
+d3.select("svg").append("line")
+    .attr("class", function(d) { return "slr " + "Other"})
+    .style("stroke", "darkgray")
+    .style("stroke-width", 1)
+    .style("opacity", 0)
+    .attr("x1", 208)
+    .attr("y1", 185)
+    .attr("x2", 269)
+    .attr("y2", 252);
+
+
+var filter = function(d) {
+    d3.selectAll(".dots").style("opacity", .15)
+    d3.selectAll(".slr").style("opacity", 0)
+    d3.selectAll("."+d).style("opacity", 1)
+  };
+
+var unfilter = function(d) {
+    d3.selectAll(".dots").style("opacity", 1)
+    d3.selectAll(".slr").style("opacity", 0)
+    d3.selectAll(".All").style("opacity", 1)
+  };
+
+d3.select("svg").append("circle")
+    .data(["musical"])
+    .attr('cx',800)
+    .attr('cy',335)
+    .attr('r',5)
+    .style('fill',"dodgerblue")
+    .on("mouseover", filter)
+    .on("mouseleave", unfilter);
+
+d3.select("svg").append("text")
+    .data(["musical"])
+    .attr("transform","translate(814,340)")
+    .style("text-anchor", "left")
+    .style("fill", "dodgerblue")
+    .on("mouseover", filter)
+    .on("mouseleave", unfilter)
+    .text("Musical");
+
+d3.select("svg").append("circle")
+    .data(["play"])
+    .attr('cx',800)
+    .attr('cy',355)
+    .attr('r',5)
+    .style('fill',"darkorange")
+    .on("mouseover", filter)
+    .on("mouseleave", unfilter);
+
+d3.select("svg").append("text")
+    .data(["play"])
+    .attr("transform","translate(814,360)")
+    .style("text-anchor", "left")
+    .style("fill", "darkorange")
+    .on("mouseover", filter)
+    .on("mouseleave", unfilter)
+    .text("Play");
+
+d3.select("svg").append("circle")
+    .data(["other"])
+    .attr('cx',800)
+    .attr('cy',375)
+    .attr('r',5)
+    .style('fill',"darkgray")
+    .on("mouseover", filter)
+    .on("mouseleave", unfilter);
+
+d3.select("svg").append("text")
+    .data(["other"])
+    .attr("transform","translate(814,380)")
+    .style("text-anchor", "left")
+    .style("fill", "darkgray")
+    .on("mouseover", filter)
+    .on("mouseleave", unfilter)
+    .text("Other");
+
+d3.select("svg").append("text")
+    .attr("transform","translate(565,360)")
+    .style("text-anchor", "left")
+    .style("fill", "black")
+    .text("Move mouse over legend to filter:");
+
 
 </script>
 
