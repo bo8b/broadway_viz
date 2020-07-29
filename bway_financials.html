@@ -200,6 +200,19 @@ d3.select("svg").append("line")
     .attr("x2", 269)
     .attr("y2", 252);
 
+d3.select("svg").append("rect")
+    .attr("x",550)
+    .attr("y",310)
+    .attr("width",350)
+    .attr("height",90)
+    .style("fill","black");
+d3.select("svg").append("rect")
+    .attr("x",553)
+    .attr("y",313)
+    .attr("width",344)
+    .attr("height",84)
+    .style("fill","white");
+
 
 var filter = function(d) {
     d3.selectAll(".dots").style("opacity", .15)
