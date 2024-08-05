@@ -1,7 +1,7 @@
 ## Financial and Attendance History for Broadway Theatrical Productions
 
-Bob Manasco
-bobmanasco@gmail.com
+Bob Manasco  
+bobmanasco@gmail.com  
 29 July 2020
 
 ### Overview
