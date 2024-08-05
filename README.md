@@ -8,7 +8,7 @@ bobmanasco@gmail.com
 
 In this narrative visualization, I examine the history of Broadway shows as far back as 1901.  I look at attendance trends over the past 25 years, and then delve more thoroughly into the financial gross revenues for recent productions.
 
-Data for the charts contained in this Data Visualization project have been retrieved from the website Towards Data Science (full reference is contained on the website).
+Data for the charts contained in this Data Visualization project have been retrieved from the website [Towards Data Science](https://towardsdatascience.com/opening-the-stage-door-for-big-data-in-broadway-20ca3e35a274) (full reference is contained on the website).
 
 
 ### Messaging
